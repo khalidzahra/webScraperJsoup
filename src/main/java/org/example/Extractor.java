@@ -13,7 +13,7 @@ public class Extractor {
 
         String role, name, email;
         List<Chair> chairs = new ArrayList<>();
-        //todo
+        System.out.println("Sample Change");
         return chairs;
     }
     public List<ResearchLab> findResearchLabs(String url) {
