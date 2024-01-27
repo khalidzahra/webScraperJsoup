@@ -19,16 +19,14 @@ public class Extractor {
             for (Element individual : people) {
                 String title = individual.select("td").text();
                 boolean chair = title.toLowerCase().contains("chair"); // Check if their affiliation contains the word "Chair" or not.
-                if (chair == true) {
+                if (chair) {
                     name = individual.select("tbody > tr > td > strong").text();
                     role = individual.child(0).text();
                     email = individual.select("tbody > tr > td > a").text();
-                    Chair info = new Chair(name, role, email);
-                    chairs.add(info);
+                    chairs.add(new Chair(name, role, email));
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         }
         return chairs;
@@ -38,15 +36,14 @@ public class Extractor {
         try {
             Document doc = Jsoup.connect(url).get();
             Elements books = doc.select(".col-12.r, .col-sm > ul > li > a");
-            String labName = "";
-            String labLink = "";
+            String labName;
+            String labLink;
             for (Element book : books) {
                 labName = book.text();
                 labLink = book.attr("href");
                 researchLabs.add(new ResearchLab(labName, labLink));
             }
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         }
         return researchLabs;
