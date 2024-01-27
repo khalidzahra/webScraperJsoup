@@ -9,13 +9,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Extractor {
+    
     public List<Chair> getChairs(String url){
-
-        String role, name, email;
         List<Chair> chairs = new ArrayList<>();
-        System.out.println("Sample Change");
+
+        Document document = getDocument(url);
+        if (document == null) return chairs;
+
+        document.select("table.table>tbody>tr").forEach(tr -> {
+            String role, name = "", email = "";
+            if (tr.children().isEmpty() || !tr.children().first().hasText() || !tr.children().first().text().toLowerCase().contains("chair")) {
+                return;
+            }
+            role = tr.child(0).text();
+            Element facultyDetailsElement = tr.child(1);
+            for (Element child : facultyDetailsElement.children()) {
+                if (child.tagName().equals("strong")) {
+                    name = child.select("a").text();
+                } else if (child.tagName().equals("a") && child.attr("abs:href").startsWith("mailto")) {
+                    email = child.text();
+                }
+            }
+            chairs.add(new Chair(name, role, email));
+        });
+
         return chairs;
     }
+
     public List<ResearchLab> findResearchLabs(String url) {
 
         List<ResearchLab> researchLabs = new ArrayList<>();
