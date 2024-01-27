@@ -29,6 +29,7 @@ public class Extractor {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
         return chairs;
     }
@@ -46,6 +47,7 @@ public class Extractor {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
         return researchLabs;
     }
