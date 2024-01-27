@@ -23,4 +23,18 @@ public class Extractor {
         return researchLabs;
     }
 
+    /**
+     * Uses Jsoup to connect to the given url
+     *
+     * @param url String parameter containing page URL
+     * @return Returns Document if url is valid, otherwise null
+     */
+    private Document getDocument(String url) {
+        try {
+            return Jsoup.connect(url).get();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
 }
