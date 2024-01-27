@@ -37,9 +37,14 @@ public class Extractor {
     }
 
     public List<ResearchLab> findResearchLabs(String url) {
-
         List<ResearchLab> researchLabs = new ArrayList<>();
-        //todo
+
+        Document document = getDocument(url);
+        if (document == null) return researchLabs;
+
+        Element labList = document.select("div.row>div.col-12.col-sm>ul").first();
+        labList.select("li>a").forEach(lab -> researchLabs.add(new ResearchLab(lab.text(), lab.attr("abs:href"))));
+
         return researchLabs;
     }
 
