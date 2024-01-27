@@ -16,10 +16,11 @@ public class Extractor {
         Document document = getDocument(url);
         if (document == null) return chairs;
 
-        document.select("table.table>tbody>tr").forEach(tr -> {
-            String role, name = "", email = "";
+        String role = "", name = "", email = "";
+
+        for (Element tr : document.select("table.table>tbody>tr")) {
             if (tr.children().isEmpty() || !tr.children().first().hasText() || !tr.children().first().text().toLowerCase().contains("chair")) {
-                return;
+                continue;
             }
             role = tr.child(0).text();
             Element facultyDetailsElement = tr.child(1);
@@ -31,7 +32,7 @@ public class Extractor {
                 }
             }
             chairs.add(new Chair(name, role, email));
-        });
+        }
 
         return chairs;
     }
