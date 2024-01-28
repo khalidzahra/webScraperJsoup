@@ -40,7 +40,7 @@ public class Extractor {
             String labLink;
             for (Element book : books) {
                 labName = book.text();
-                labLink = book.attr("href");
+                labLink = book.attr("abs:href");
                 researchLabs.add(new ResearchLab(labName, labLink));
             }
         } catch (IOException e) {
