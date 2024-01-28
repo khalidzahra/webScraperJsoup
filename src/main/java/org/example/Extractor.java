@@ -16,7 +16,7 @@ public class Extractor {
         Document document = getDocument(url);
         if (document == null) return chairs;
 
-        String role = "", name = "", email = "";
+        String role, name = "", email = "";
 
         for (Element tr : document.select("table.table>tbody>tr")) {
             if (tr.children().isEmpty() || !tr.children().first().hasText() || !tr.children().first().text().toLowerCase().contains("chair")) {
